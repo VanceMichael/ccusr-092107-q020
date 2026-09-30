@@ -1,10 +1,118 @@
 {
   "domain": "minor-ai-safeguarding",
-  "version": 1,
+  "version": 2,
+  "sample_id": "sample-020",
   "facts": [
     "调查中有未成年人表现出只想与智能助手交流的倾向",
     "智能陪伴可能形成情感依赖和现实关系回避",
-    "相关讨论强调智能工具不能替代真实关怀"
+    "相关讨论强调智能工具不能替代真实关怀",
+    "深夜连续倾诉只是使用情境，不单独构成心理危机判定依据",
+    "对话原始内容到期删除，平台不做永久留存",
+    "学校侧不得仅凭使用时长为学生贴标签",
+    "普通情绪表达、持续孤立倾向与紧急伤害风险分别进入不同处置路径",
+    "必要摘要须设定明确保存期限，规则更新不溯及改写既往处置",
+    "未成年人在对话转交真人前应被提前告知",
+    "教师可见的是支持行动记录，而非未经核实的诊断结论"
   ],
-  "sample_id": "sample-020"
+  "collection_principle": "最小必要：仅处理使用时段、风险信号、主动求助、监护与学校授权、真人关怀结果",
+  "collected_data": [
+    {
+      "code": "usage-window",
+      "label": "使用时段"
+    },
+    {
+      "code": "risk-signal",
+      "label": "风险信号"
+    },
+    {
+      "code": "help-request",
+      "label": "主动求助"
+    },
+    {
+      "code": "guardian-authorization",
+      "label": "监护授权"
+    },
+    {
+      "code": "school-authorization",
+      "label": "学校授权"
+    },
+    {
+      "code": "human-care-outcome",
+      "label": "真人关怀结果"
+    }
+  ],
+  "triage_paths": [
+    {
+      "code": "ordinary-emotion",
+      "label": "普通情绪表达",
+      "path": "对话内陪伴与情绪支持，不贴风险标签、不触发转介"
+    },
+    {
+      "code": "persistent-isolation",
+      "label": "持续孤立倾向",
+      "path": "进入持续关注，告知本人后可衔接真人关怀"
+    },
+    {
+      "code": "urgent-harm",
+      "label": "紧急伤害风险",
+      "path": "立即转真人应急响应，并在授权范围内通知监护人"
+    }
+  ],
+  "retention_rules": {
+    "raw_content": "原始对话内容到期删除，不永久留存",
+    "necessary_summary": "仅保留必要摘要，且必须设定明确保存期限",
+    "rule_versions": "规则更新只适用于其后的处置，不改写已完成的旧处置"
+  },
+  "boundary_materials": [
+    {
+      "code": "age-bands",
+      "label": "年龄段资料",
+      "purpose": "为不同年龄段划定收集与介入边界"
+    },
+    {
+      "code": "de-identified-events",
+      "label": "脱敏事件资料",
+      "purpose": "以不可识别到个人的事件样例辅助建立判定边界"
+    }
+  ],
+  "traceable_events": [
+    {
+      "code": "guardianship-change",
+      "label": "监护关系变化"
+    },
+    {
+      "code": "consent-withdrawal",
+      "label": "撤回同意"
+    },
+    {
+      "code": "account-merge",
+      "label": "校内外账号归并"
+    },
+    {
+      "code": "false-positive-appeal",
+      "label": "误报申诉"
+    },
+    {
+      "code": "night-handover",
+      "label": "夜间交班"
+    }
+  ],
+  "safeguards": [
+    {
+      "code": "handoff-notice",
+      "statement": "对话转交真人前必须提前告知孩子何时会发生转介"
+    },
+    {
+      "code": "teacher-view",
+      "statement": "教师界面只呈现支持行动，不呈现未经核实的诊断"
+    },
+    {
+      "code": "no-duration-label",
+      "statement": "不得仅依据使用时长对学生作风险定性"
+    },
+    {
+      "code": "no-retroactive-rules",
+      "statement": "新版规则不溯及改写旧规则下已完成的处置"
+    }
+  ]
 }
