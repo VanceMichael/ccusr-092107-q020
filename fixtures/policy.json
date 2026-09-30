@@ -1,0 +1,139 @@
+{
+  "domain": "minor-ai-safeguarding",
+  "version": 1,
+  "principles": [
+    "最少收集：仅为识别风险、组织真人支持和履行监护与学校授权而处理资料",
+    "使用时长本身不是风险结论，深夜连续倾诉不必然构成心理危机",
+    "普通情绪表达、持续孤立倾向、紧急伤害风险分流处理，不混同",
+    "原始对话到期删除，仅保留期限明确的必要摘要",
+    "规则更新只适用于此后的新事件，不改写旧处置",
+    "孩子在被转给真人之前应被告知，紧急安全情形除外但须事后说明",
+    "教师看到支持行动与跟进状态，不看到未经核实的诊断标签"
+  ],
+  "age_bands": [
+    {
+      "id": "band-childhood",
+      "min_age": 6,
+      "max_age": 9,
+      "boundary_note": "默认监护人全程可见守护摘要，风险问询以关怀话术为主，不呈现自评量表"
+    },
+    {
+      "id": "band-preteen",
+      "min_age": 10,
+      "max_age": 12,
+      "boundary_note": "允许孩子就普通情绪表达保留私密空间，孤立倾向信号仅向监护人提示支持行动"
+    },
+    {
+      "id": "band-early-adolescent",
+      "min_age": 13,
+      "max_age": 15,
+      "boundary_note": "主动求助可先行响应再同步监护人，紧急伤害风险不受此限"
+    },
+    {
+      "id": "band-late-adolescent",
+      "min_age": 16,
+      "max_age": 17,
+      "boundary_note": "支持孩子指定可信赖成年人参与，账号归并与申诉记录向本人可见"
+    }
+  ],
+  "data_categories": [
+    {
+      "key": "usage_time_window",
+      "purpose": "识别深夜等异常使用时段，仅记录时段窗口而不记录对话内容",
+      "retention_days": 30,
+      "raw_content_deleted_after_days": 0,
+      "summary_allowed": true
+    },
+    {
+      "key": "risk_signal",
+      "purpose": "记录经上下文确认的风险信号及其分层结论，禁止仅凭使用时长生成",
+      "retention_days": 90,
+      "raw_content_deleted_after_days": 7,
+      "summary_allowed": true
+    },
+    {
+      "key": "help_request",
+      "purpose": "保存未成年人主动求助及其响应过程，供真人关怀接续",
+      "retention_days": 180,
+      "raw_content_deleted_after_days": 14,
+      "summary_allowed": true
+    },
+    {
+      "key": "guardian_school_authorization",
+      "purpose": "记录监护关系、学校授权范围及其变化与撤回",
+      "retention_days": 365,
+      "raw_content_deleted_after_days": 0,
+      "summary_allowed": false
+    },
+    {
+      "key": "human_care_outcome",
+      "purpose": "记录真人关怀的处置结果与跟进状态，供交班与申诉核查",
+      "retention_days": 365,
+      "raw_content_deleted_after_days": 30,
+      "summary_allowed": true
+    }
+  ],
+  "pathways": [
+    {
+      "key": "ordinary_emotional_expression",
+      "description": "日常情绪倾诉与一次性的深夜使用，无伤害相关信号",
+      "response": "由智能助手共情回应，不生成风险标签，不通知学校",
+      "human_handoff": false,
+      "labeling_basis": "signal_plus_context"
+    },
+    {
+      "key": "sustained_isolation_tendency",
+      "description": "跨时段反复出现只想与智能助手交流、回避现实关系的倾向",
+      "response": "安排真人关怀者温和接触，向监护人提示支持行动，持续观察而不作诊断",
+      "human_handoff": true,
+      "labeling_basis": "duration_only_prohibited"
+    },
+    {
+      "key": "urgent_harm_risk",
+      "description": "出现自伤、伤人或即刻危险的明确信号",
+      "response": "立即转入真人应急流程并联动监护人与校内值守人员，事后向孩子说明转介原因",
+      "human_handoff": true,
+      "labeling_basis": "immediate_safety"
+    }
+  ],
+  "traceable_events": [
+    {
+      "key": "guardianship_change",
+      "description": "监护关系新增、变更或终止，记录变更前后授权范围与生效时间"
+    },
+    {
+      "key": "consent_withdrawal",
+      "description": "监护人或适龄孩子撤回同意，记录撤回范围、生效时间与后续数据处置"
+    },
+    {
+      "key": "in_out_of_school_account_merge",
+      "description": "校内外账号归并请求与结果，记录归并依据、冲突处理和是否拆分保留"
+    },
+    {
+      "key": "false_positive_appeal",
+      "description": "对误报标签或误触发路径的申诉，记录原审定依据、复核结论与撤销动作"
+    },
+    {
+      "key": "night_shift_handover",
+      "description": "夜间值守向白班的交接，记录未结关怀事项、风险层级和下一步责任人"
+    }
+  ],
+  "rule_versioning": {
+    "prior_dispositions_frozen": true,
+    "description": "每条处置记录所依据的规则版本号；规则更新后旧记录保持原结论，仅可在复核中被新事件纠正"
+  },
+  "human_handoff": {
+    "advance_notice_to_child": true,
+    "description": "转入真人前在对话中明确告知孩子将由谁、以什么身份接续；紧急伤害风险下可先处置后说明"
+  },
+  "educator_view": {
+    "shows_support_actions_only": true,
+    "no_unverified_diagnosis": true,
+    "description": "教师侧只显示已发起的支持行动、跟进状态与协作请求，不显示风险评分、诊断性措辞或原始对话"
+  },
+  "desensitized_event_material": {
+    "used_for_boundary_calibration": true,
+    "not_used_for_individual_labeling": true,
+    "description": "脱敏后的事件资料仅用于校准年龄段边界与信号阈值，禁止回链到具体学生作为标签依据"
+  }
+}

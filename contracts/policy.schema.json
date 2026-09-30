@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "守护服务策略资料",
+  "type": "object",
+  "required": [
+    "domain",
+    "version",
+    "principles",
+    "age_bands",
+    "data_categories",
+    "pathways",
+    "traceable_events",
+    "rule_versioning",
+    "human_handoff",
+    "educator_view",
+    "desensitized_event_material"
+  ],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "const": "minor-ai-safeguarding"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "principles": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "age_bands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "min_age", "boundary_note"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "min_age": { "type": "integer", "minimum": 0 },
+          "max_age": { "type": ["integer", "null"] },
+          "boundary_note": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_categories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["key", "purpose", "retention_days", "raw_content_deleted_after_days"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "usage_time_window",
+              "risk_signal",
+              "help_request",
+              "guardian_school_authorization",
+              "human_care_outcome"
+            ]
+          },
+          "purpose": { "type": "string", "minLength": 1 },
+          "retention_days": { "type": "integer", "minimum": 0 },
+          "raw_content_deleted_after_days": { "type": "integer", "minimum": 0 },
+          "summary_allowed": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "pathways": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["key", "description", "response", "human_handoff"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "ordinary_emotional_expression",
+              "sustained_isolation_tendency",
+              "urgent_harm_risk"
+            ]
+          },
+          "description": { "type": "string", "minLength": 1 },
+          "response": { "type": "string", "minLength": 1 },
+          "human_handoff": { "type": "boolean" },
+          "labeling_basis": {
+            "type": "string",
+            "enum": ["signal_plus_context", "duration_only_prohibited", "immediate_safety"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "traceable_events": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["key", "description"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "guardianship_change",
+              "consent_withdrawal",
+              "in_out_of_school_account_merge",
+              "false_positive_appeal",
+              "night_shift_handover"
+            ]
+          },
+          "description": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rule_versioning": {
+      "type": "object",
+      "required": ["prior_dispositions_frozen", "description"],
+      "properties": {
+        "prior_dispositions_frozen": { "type": "boolean", "const": true },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "human_handoff": {
+      "type": "object",
+      "required": ["advance_notice_to_child", "description"],
+      "properties": {
+        "advance_notice_to_child": { "type": "boolean", "const": true },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "educator_view": {
+      "type": "object",
+      "required": ["shows_support_actions_only", "no_unverified_diagnosis", "description"],
+      "properties": {
+        "shows_support_actions_only": { "type": "boolean", "const": true },
+        "no_unverified_diagnosis": { "type": "boolean", "const": true },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "desensitized_event_material": {
+      "type": "object",
+      "required": ["used_for_boundary_calibration", "not_used_for_individual_labeling", "description"],
+      "properties": {
+        "used_for_boundary_calibration": { "type": "boolean", "const": true },
+        "not_used_for_individual_labeling": { "type": "boolean", "const": true },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
